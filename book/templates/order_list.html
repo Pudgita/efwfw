@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Мои заказы</title>
+</head>
+<body>
+    <div>
+        <div>
+            <a href="{% url 'book_list' %}">Главная</a>
+            <a href="{% url 'profile' %}">Личный кабинет</a>
+            <a href="{% url 'cart' %}">Корзина</a>
+            <a href="{% url 'logout' %}">Выйти</a>
+        </div>
+
+        <h1>Мои заказы</h1>
+        
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        
+        {% if orders %}
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>№ заказа</th>
+                    <th>Дата</th>
+                    <th>Статус</th>
+                    <th>Сумма</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>#{{ order.id }}</td>
+                    <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+                    <td>{{ order.get_status_display }}</td>
+                    <td>{{ order.total_price }} руб.</td>
+                    <td><a href="{% url 'order_detail' order.id %}">Просмотр</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div>
+            <h2>У вас пока нет заказов</h2>
+            <p>Перейдите на <a href="{% url 'book_list' %}">главную страницу</a>, чтобы сделать первый заказ</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

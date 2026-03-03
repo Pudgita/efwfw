@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Заказ #{{ order.id }}</title>
+</head>
+<body>
+    <div>
+        <div>
+            <a href="{% url 'book_list' %}">Главная</a>
+            <a href="{% url 'profile' %}">Личный кабинет</a>
+            <a href="{% url 'cart' %}">Корзина</a>
+            <a href="{% url 'order_list' %}">Мои заказы</a>
+            <a href="{% url 'logout' %}">Выйти</a>
+        </div>
+
+        <h1>Заказ #{{ order.id }}</h1>
+
+        <div>
+            <p><strong>Дата заказа:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
+            <p><strong>Статус:</strong> {{ order.get_status_display }}</p>
+        </div>
+
+        <h2>Состав заказа</h2>
+
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Автор</th>
+                    <th>Цена за шт.</th>
+                    <th>Количество</th>
+                    <th>Сумма</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order_items %}
+                <tr>
+                    <td>{{ item.book.title }}</td>
+                    <td>{{ item.book.author }}</td>
+                    <td>{{ item.price_at_time }} руб.</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.get_total_price }} руб.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div>
+            <strong>Итого: {{ order.total_price }} руб.</strong>
+        </div>
+
+        <a href="{% url 'order_list' %}">← К списку заказов</a>
+    </div>
+</body>
+</html>

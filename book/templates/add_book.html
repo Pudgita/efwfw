@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Книга #{{ book.id }}</title>
+</head>
+<body>
+    <div>
+        <h2>Информация о книге</h2>
+        <p><strong>Название:</strong> {{ book.title }}</p>
+        <p><strong>Автор:</strong> {{ book.author }}</p>
+        <p><strong>Цена:</strong> {{ book.price }} руб.</p>
+    </div>
+
+    <p><a href="{% url 'book_list' %}">← Вернуться к списку книг</a></p>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Личный кабинет</title>
+</head>
+<body>
+    <div>
+        <div>
+            <a href="{% url 'book_list' %}">Главная</a>
+            <a href="{% url 'cart' %}">Корзина</a>
+            <a href="{% url 'order_list' %}">Мои заказы</a>
+            <a href="{% url 'logout' %}">Выйти</a>
+        </div>
+
+        <h1>Личный кабинет</h1>
+
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div>
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <ul>
+                    {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <button type="submit">Сохранить изменения</button>
+        </form>
+    </div>
+</body>
+</html>
